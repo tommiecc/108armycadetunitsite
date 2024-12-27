@@ -1,14 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import NotFoundComponent from '../components/NotFoundComponent.vue'
+import NotFoundComponent from '@/components/NotFoundComponent.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    {
-      path: '/:pathMatch(.*)', 
-      component: NotFoundComponent
-    },
     {
       path: '/',
       name: 'home',
@@ -21,6 +17,16 @@ const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue'),
+    },
+    {
+      path: '/LocationDisallow',
+      name: "locationDisallow",
+      component: () => import('@/components/LocationDisallowComponent.vue')
+    },
+    {
+      path: '/:pathMatch(.*)*', 
+      name: "notfound",
+      component: NotFoundComponent,
     },
   ],
 })
