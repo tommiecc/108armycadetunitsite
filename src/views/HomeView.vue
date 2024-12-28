@@ -14,7 +14,7 @@
       <div class="card bg-base-100 image-full w-72 min-h-80 shadow-xl hover:scale-105">
         <figure>
           <img
-            src="../assets/img/service.jpg"
+            src="@/assets/img/service.jpg"
             alt="Cadets at an ANZAC day service" />
         </figure>
         <div class="card-body bg-black bg-opacity-40 rounded-2xl">
@@ -32,7 +32,7 @@
       <div class="card bg-base-100 image-full w-72 min-h-80 shadow-xl hover:scale-105">
         <figure>
           <img
-            src="../assets/img/integrity.jpg"
+            src="@/assets/img/integrity.jpg"
             alt="Cadets participating in a VCP (vehicle checkpoint)" />
         </figure>
         <div class="card-body bg-black bg-opacity-40 rounded-2xl">
@@ -80,7 +80,7 @@
       <div class="card bg-base-100 image-full w-72 min-h-80 max-h shadow-xl hover:scale-105">
         <figure>
           <img
-            src="../assets/img/dining.jpg"
+            src="@/assets/img/dining.jpg"
             alt="Cadets at a unit dining in night" />
         </figure>
         <div class="card-body bg-black bg-opacity-40 rounded-2xl">
@@ -111,7 +111,7 @@
       <div class="card bg-base-100 image-full w-72 min-h-80 shadow-xl hover:scale-105">
         <figure>
           <img
-            src="../assets/img/starsafari.jpg"
+            src="@/assets/img/starsafari.jpg"
             alt="Cadets on Ex Starlight Safari 2024" />
         </figure>
         <div class="card-body bg-black bg-opacity-40 rounded-2xl">
@@ -129,7 +129,7 @@
       <div class="card bg-base-100 image-full w-72 min-h-80 shadow-xl hover:scale-105">
         <figure>
           <img
-            src="../assets/img/anzac1.jpg"
+            src="@/assets/img/anzac1.jpg"
             alt="Cadets at an ANZAC day service" />
         </figure>
         <div class="card-body bg-black bg-opacity-40 rounded-2xl">
