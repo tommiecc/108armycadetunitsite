@@ -3,61 +3,67 @@ import { RouterLink, RouterView } from 'vue-router'
 </script>
 
 <template>
-  <div v-if="!isLocationDisallow">
-    <div class="flex bg-white flex-wrap mx-auto py-7">
-      <div class="float-left px-14">
-        <img src="/img/logo.jpg" alt="AAC Logo" width=100 height=100>
+  <span v-if="!LocationDisallow">
+    <span class="min-h-screen">
+      <div class="container mx-auto max-w-full bg-white shadow-lg">
+        <!-- Header -->
+        <header class="bg-gradient-to-b from-[#1a3409] to-[#2d4f0c] text-white p-5 text-center border-b-4 border-[#c4a000]">
+          <div class="flex items-center justify-center">
+            <img src="/img/logo.png" alt="Unit Crest" class="float-left mr-4" width=100 height=100>
+            <div>
+              <h1 class="text-3xl font-bold">108 Army Cadet Unit - Kenmore</h1>
+              <h3 class="text-xl mt-2">Courage • Respect • Integrity • Service • Excellence</h3>
+            </div>
+          </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="bg-[#1a3409] p-3 text-center relative flex justify-center items-center">
+          <a href="/" class="text-white px-4 py-1 mx-2 border border-transparent hover:border-[#c4a000] hover:bg-white/10 transition-all">
+            Home
+          </a>
+          <a href="/about" class="text-white px-4 py-1 mx-2 border border-transparent hover:border-[#c4a000] hover:bg-white/10 transition-all">
+            About Us
+          </a>
+          <a href="/gallery" class="text-white px-4 py-1 mx-2 border border-transparent hover:border-[#c4a000] hover:bg-white/10 transition-all">
+            Gallery
+          </a>
+          <a href="/membersOnly" class="text-white px-4 py-1 mx-2 border border-transparent hover:border-[#c4a000] hover:bg-white/10 transition-all flex items-center">
+            Members Area 🔒
+          </a>
+          <a href="https://www.armycadets.gov.au/find-a-unit/unit?ua=108ACU" target="_blank" class="absolute right-5 bg-[#c4a000] text-black px-5 py-2 rounded font-bold uppercase border-2 border-[#ffd700] shadow-md hover:bg-[#ffd700] hover:border-[#c4a000] hover:scale-105 transition-all">
+            Join Our Unit!
+          </a>
+        </nav>
+
+        <!-- Marquee -->
+        <div class="relative w-full min-h-8 overflow-hidden bg-[#c4a000] text-black">
+          <div class="absolute whitespace-nowrap animate-marquee flex items-center pause-hover">
+            <span class="marquee-item px-2">Next Parade: Tuesday 1800hrs-2100hrs</span>
+            <span class="marquee-item px-2">•</span>
+            <span class="marquee-item px-2">Promotion Applications Now Open. <a href="#" class="text-green-900 font-semibold hover:text-white hover:scale-150">Apply Here!</a></span>
+            <span class="marquee-item px-2">•</span>
+            <span class="marquee-item px-2">Nominate for Ex ... <a href="#" class="text-green-900 font-semibold hover:text-white hover:scale-150">Now!</a></span>
+          </div>
+        </div>
+
+        <RouterView />
+
+        <!-- Footer -->
+        <footer class="bg-[#1a3409] text-center p-5 mt-5">
+          <p class="text-white">© 2024 108 Army Cadet Unit - Kenmore | Last Updated: December 28, 2024</p>
+          <a href="/copyright" class="text-white hover:text-[#c4a000] hover:font-semibold">Copyright</a>
+        </footer>
       </div>
-      <div class="justify-center items-center text-center">
-        <h1 class="text-green-900 font-semibold text-3xl py-2">
-        108 Army Cadet Unit - Kemore
-        </h1>
-
-        <h3 class="text-black font-semibold text-xl px-10 py-5">
-        Courage - Respect - Integrity - Service - Excellence
-        </h3>
-      </div>
-    </div>
-
-    <nav class="bg-white border-gray-200 dark:bg-gray-900">
-      <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-      <div class="flex items-center space-x-3 rtl:space-x-reverse px-16"></div>
-      <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-          <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Get started</button>
-          <button data-collapse-toggle="navbar-cta" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-cta" aria-expanded="false">
-            <span class="sr-only">Open main menu</span>
-            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
-            </svg>
-        </button>
-      </div>
-      <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-cta">
-        <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-          <li>
-            <a href="#" class="block py-2 px-3 md:p-0 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:dark:text-blue-500" aria-current="page">Home</a>
-          </li>
-          <li>
-            <a href="#" class="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">About</a>
-          </li>
-          <li>
-            <a href="#" class="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Services</a>
-          </li>
-          <li>
-            <a href="#" class="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Contact</a>
-          </li>
-        </ul>
-      </div>
-      </div>
-    </nav>
-
-    
-
-
-
-  </div>
-
-  <RouterView />
+    </span>
+  </span>
 </template>
+
+<style scoped>
+.pause-hover:hover {
+  animation-play-state: paused;
+}
+</style>
 
 <script>
 export default {
@@ -68,4 +74,5 @@ export default {
     },
   },
 };
+
 </script>

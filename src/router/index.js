@@ -2,6 +2,19 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import NotFoundComponent from '@/components/NotFoundComponent.vue'
 
+import VuexPersistence from 'vuex-persist'
+
+const vuexLocal = new VuexPersistence({
+  storage: window.localStorage
+});
+
+const store = {
+  state: {},
+  mutations: {},
+  actions: {},
+  plugins: [vuexLocal.plugin]
+}
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -9,24 +22,46 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
+      meta: {
+        requiresAuth: false,
+      }
     },
     {
       path: '/about',
       name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue'),
+      meta: {
+        requiresAuth: false,
+      }
     },
     {
       path: '/LocationDisallow',
       name: "locationDisallow",
-      component: () => import('@/components/LocationDisallowComponent.vue')
+      component: () => import('../components/LocationDisallowComponent.vue'),
+      meta: {
+        requiresAuth: false,
+      }
+    },
+    {
+      path: '/MembersArea',
+      name: 'membersArea',
+      component: () => import('../views/MemberAreaView.vue'), 
+      meta: {
+        requiresAuth: true,
+      }
+    },
+    {
+      path: '/Login',
+      name: 'login',
+      component: () => import('../components/LoginComponent.vue'),
     },
     {
       path: '/:pathMatch(.*)*', 
       name: "notfound",
       component: NotFoundComponent,
+      meta: {
+        requiresAuth: false,
+      }
     },
   ],
 })
