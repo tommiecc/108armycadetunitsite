@@ -9,7 +9,7 @@ async function testAuthFunction() {
               "is-admin": true,
               "is-logged-in": true,
               "change-pass": true,
-              "user-input": "testpass"
+              "user-input": "testpass1234"
             }
         },
         {
@@ -18,7 +18,7 @@ async function testAuthFunction() {
             "is-admin": false,
             "is-logged-in": false,
             "change-pass": false,
-            "user-input": "testpass"
+            "user-input": "testpass1234"
             }
         },
         {
