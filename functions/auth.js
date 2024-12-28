@@ -35,7 +35,7 @@ export function onRequest(context) {
     if (checkChange(context)) {
         try {
             const err = changePasscode(context);
-            if (err == null) return new Response().status(200).json({ message: "Successfully Changed" });
+            if (err == null) return new Response({status:200});
             else return err;
         } catch (exception) {
             return new Response(`${exception.message}\n${exception,stack}`, { status: 500 });
@@ -44,9 +44,9 @@ export function onRequest(context) {
 
     try {
         const [success, isAdmin] = authenticationCheck(context);
-        if (success) return new Response().status(200);
-        if (isAdmin) return new Response().status(200).json({ message: "admin" });
-        else return new Response().status(401);
+        if (success) return new Response({status:200});
+        if (isAdmin) return new Response({status:200});
+        else return new Response({status:401});
     } catch (exception) {
         return new Response(`${exception.message}\n${exception.stack}`, { status: 500 });
     }
@@ -64,9 +64,9 @@ async function changePasscode(context) {
         const hashedPass = await bcrypt.hash(context.request.headers.get("user-input"), salt);
         await context.env.passwordCheck.put("passcode", hashedPass);
     } else if (isLoggedIn) {
-        return new Response().status(403);
+        return new Response({status:403});
     } else {
-        return new Response().status(401);
+        return new Response({status:401});
     }
 }
 
