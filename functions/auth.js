@@ -31,7 +31,7 @@ async function changePasscode(context) {
     if (isAuthed) {
         const salt = await bcrypt.genSalt(12)
         const hashedPass = await bcrypt.hash(context.request.headers.get("new-pass"), salt);
-        await context.env.cadetPasses.put("passcode", hashedPass);
+        await context.env.cadetsPasses.put("passcode", hashedPass);
     } else if (isLoggedIn) {
         return new Response().status(403);
     } else {
@@ -40,8 +40,8 @@ async function changePasscode(context) {
 }
 
 async function authenticationCheck(context) {
-    const password = await context.env.cadetPasses.get("passcode");
-    const adminPass = await context.env.cadetPasses.get("admin");
+    const password = await context.env.cadetsPasses.get("passcode");
+    const adminPass = await context.env.cadetsPasses.get("admin");
     const userGiven = await context.request.headers.get("user-input");
     const isValid = await bcrypt.compare(userGiven, password);
     const isValidAdmin = await bcrypt.compare(userGiven, adminPass);
