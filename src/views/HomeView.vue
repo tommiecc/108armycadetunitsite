@@ -50,7 +50,7 @@
       <div class="card bg-base-100 image-full w-72 min-h-80 shadow-xl hover:scale-105">
         <figure>
           <img
-            src="@/assets/img/parade.JPG"
+            src="@/assets/img/parade.jpg"
             alt="Cadets on parade" />
         </figure>
         <div class="card-body bg-black bg-opacity-40 rounded-2xl">
@@ -111,7 +111,7 @@
       <div class="card bg-base-100 image-full w-72 min-h-80 shadow-xl hover:scale-105">
         <figure>
           <img
-            src="@/assets/img/starsafari.JPG"
+            src="@/assets/img/starsafari.jpg"
             alt="Cadets on Ex Starlight Safari 2024" />
         </figure>
         <div class="card-body bg-black bg-opacity-40 rounded-2xl">
