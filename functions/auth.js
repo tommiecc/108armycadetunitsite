@@ -70,11 +70,20 @@ export async function onRequestPost(context) {
     if (changePass) {
       if (!isLoggedIn) {
         return new Response(JSON.stringify({ 
-          error: 'Must be logged in to change password' 
+          error: 'User is unauthorised.' 
         }), {
-          status: 403,
+          status: 401,
           headers: { 'Content-Type': 'application/json' }
         });
+      }
+
+      if (!isAdmin) {
+        return new Response(JSON.stringify({ 
+            error: 'User is forbidden from changing passwords.' 
+          }), {
+            status: 403,
+            headers: { 'Content-Type': 'application/json' }
+          });
       }
 
       // Generate new password hash
@@ -82,11 +91,7 @@ export async function onRequestPost(context) {
       const newHash = await bcrypt.hash(userInput, salt);
 
       // Update appropriate password in KV
-      if (isAdmin) {
-        await env.passwordCheck.put('admin', newHash);
-      } else {
-        await env.passwordCheck.put('passcode', newHash);
-      }
+      await env.passwordCheck.put('passcode', newHash);
 
       return new Response(JSON.stringify({ 
         success: true, 
