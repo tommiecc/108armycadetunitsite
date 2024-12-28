@@ -32,6 +32,9 @@ EG. TO AUTH A LOGIN
 const bcrypt = require('bcryptjs');
 
 export function onRequest(context) {
+    return new Response(null, {status:200, statusText: `${context}`});
+}
+    /*
     if (checkChange(context)) {
         try {
             const err = changePasscode(context);
@@ -83,4 +86,4 @@ async function authenticationCheck(context) {
     } else {
         return [false, false];
     }
-}
+}*/
