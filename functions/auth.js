@@ -91,7 +91,7 @@ export async function onRequestPost(context) {
       const newHash = await bcrypt.hash(userInput, salt);
 
       // Update appropriate password in KV
-      await env.passwordCheck.put('passcode', newHash);
+      await env.passwordCheck.put('admin', newHash);
 
       return new Response(JSON.stringify({ 
         success: true, 
