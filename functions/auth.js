@@ -54,8 +54,8 @@ export async function onRequestPost(context) {
     } = data;
 
     // Get stored password hashes from KV
-    const adminHash = await env.passwordCheck.get('admin-pass');
-    const userHash = await env.passwordCheck.get('user-pass');
+    const adminHash = await env.passwordCheck.get('admin');
+    const userHash = await env.passwordCheck.get('passcode');
 
     if (!adminHash || !userHash) {
       return new Response(JSON.stringify({ 
@@ -83,9 +83,9 @@ export async function onRequestPost(context) {
 
       // Update appropriate password in KV
       if (isAdmin) {
-        await env.passwordCheck.put('admin-pass', newHash);
+        await env.passwordCheck.put('admin', newHash);
       } else {
-        await env.passwordCheck.put('user-pass', newHash);
+        await env.passwordCheck.put('passcode', newHash);
       }
 
       return new Response(JSON.stringify({ 
