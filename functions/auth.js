@@ -97,25 +97,37 @@ export async function onRequestPost(context) {
     }
 
     // Handle authentication request
-    const hashToCheck = isAdmin ? adminHash : userHash;
-    const isValid = await bcrypt.compare(userInput, hashToCheck);
+    const isValidGeneral = await bcrypt.compare(userInput, userHash);
+    const isValidAdmin = await bcrypt.compare(userInput, adminHash);
 
-    if (!isValid) {
-      return new Response(JSON.stringify({ 
-        success: false, 
-        message: 'Invalid credentials' 
-      }), {
-        status: 401,
-        headers: { 'Content-Type': 'application/json' }
-      });
+    if (isValidGeneral) {
+        return new Response(JSON.stringify({ 
+            success: true, 
+            message: 'Authentication successful' ,
+            adminLogin: false
+            }), {
+            headers: { 'Content-Type': 'application/json', 'isAdmin': false }
+        });
+    }
+
+    if (isValidAdmin) {
+        return new Response(JSON.stringify({ 
+            success: true, 
+            message: 'Authentication successful',
+            adminLogin: true
+            }), {
+            headers: { 'Content-Type': 'application/json' }
+        });
     }
 
     return new Response(JSON.stringify({ 
-      success: true, 
-      message: 'Authentication successful' 
-    }), {
-      headers: { 'Content-Type': 'application/json' }
+        success: false, 
+        message: 'Invalid credentials' 
+        }), {
+        status: 401,
+        headers: { 'Content-Type': 'application/json' }
     });
+
 
   } catch (error) {
     return new Response(JSON.stringify({ 
