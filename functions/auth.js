@@ -70,10 +70,10 @@ export async function onRequestPost(context) {
     if (changePass) {
       if (!isLoggedIn) {
         return new Response(JSON.stringify({ 
-          error: 'User is unauthorised.' 
-        }), {
-          status: 401,
-          headers: { 'Content-Type': 'application/json' }
+            error: 'User is unauthorised.' 
+          }), {
+            status: 401,
+            headers: { 'Content-Type': 'application/json' }
         });
       }
 
@@ -83,9 +83,9 @@ export async function onRequestPost(context) {
           }), {
             status: 403,
             headers: { 'Content-Type': 'application/json' }
-          });
+        });
       }
-
+  
       // Generate new password hash
       const salt = await bcrypt.genSalt(12);
       const newHash = await bcrypt.hash(userInput, salt);
@@ -101,6 +101,8 @@ export async function onRequestPost(context) {
       });
     }
 
+    console.log(adminHash);
+    console.log(userHash);
     // Handle authentication request
     const isValidGeneral = await bcrypt.compare(userInput, userHash);
     const isValidAdmin = await bcrypt.compare(userInput, adminHash);

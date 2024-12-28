@@ -1,15 +1,14 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
+  <div class="about py-2">
+    <div class="min-w-full bg-[#1a3409] text-left text-white">
+      <h3 class="text-3xl font-bold p-2">About Us</h3>
+    </div>
+
+    
+
   </div>
 </template>
 
 <style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-}
+
 </style>
