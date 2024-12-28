@@ -29,61 +29,117 @@ EG. TO AUTH A LOGIN
 */
 
 
-const bcrypt = require('bcryptjs');
+import bcrypt from 'bcryptjs';
 
-export function onRequest(context) {
-    return new Response(null, {status:200, statusText: `${context}`});
-}
-    /*
-    if (checkChange(context)) {
-        try {
-            const err = changePasscode(context);
-            if (err == null) return new Response({status:200});
-            else return err;
-        } catch (exception) {
-            return new Response(`${exception.message}\n${exception,stack}`, { status: 500 });
-        } 
+export async function onRequestPost(context) {
+  try {
+    const { request, env } = context;
+    const data = await request.json();
+    
+    // Validate input structure
+    if (!validateInput(data)) {
+      return new Response(JSON.stringify({ 
+        error: 'Invalid input format' 
+      }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' }
+      });
     }
 
-    try {
-        const [success, isAdmin] = authenticationCheck(context);
-        if (success) return new Response({status:200});
-        if (isAdmin) return new Response({status:200});
-        else return new Response({status:401});
-    } catch (exception) {
-        return new Response(`${exception.message}\n${exception.stack}`, { status: 500 });
+    const { 
+      'is-admin': isAdmin, 
+      'is-logged-in': isLoggedIn, 
+      'change-pass': changePass, 
+      'user-input': userInput 
+    } = data;
+
+    // Get stored password hashes from KV
+    const adminHash = await env.passwordCheck.get('admin-pass');
+    const userHash = await env.passwordCheck.get('user-pass');
+
+    if (!adminHash || !userHash) {
+      return new Response(JSON.stringify({ 
+        error: 'System configuration error' 
+      }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' }
+      });
     }
+
+    // Handle password change request
+    if (changePass) {
+      if (!isLoggedIn) {
+        return new Response(JSON.stringify({ 
+          error: 'Must be logged in to change password' 
+        }), {
+          status: 403,
+          headers: { 'Content-Type': 'application/json' }
+        });
+      }
+
+      // Generate new password hash
+      const salt = await bcrypt.genSalt(12);
+      const newHash = await bcrypt.hash(userInput, salt);
+
+      // Update appropriate password in KV
+      if (isAdmin) {
+        await env.passwordCheck.put('admin-pass', newHash);
+      } else {
+        await env.passwordCheck.put('user-pass', newHash);
+      }
+
+      return new Response(JSON.stringify({ 
+        success: true, 
+        message: 'Password updated successfully' 
+      }), {
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+
+    // Handle authentication request
+    const hashToCheck = isAdmin ? adminHash : userHash;
+    const isValid = await bcrypt.compare(userInput, hashToCheck);
+
+    if (!isValid) {
+      return new Response(JSON.stringify({ 
+        success: false, 
+        message: 'Invalid credentials' 
+      }), {
+        status: 401,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+
+    return new Response(JSON.stringify({ 
+      success: true, 
+      message: 'Authentication successful' 
+    }), {
+      headers: { 'Content-Type': 'application/json' }
+    });
+
+  } catch (error) {
+    return new Response(JSON.stringify({ 
+      error: 'Internal server error', 
+      details: error.message 
+    }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
 }
 
-async function checkChange(context) {
-    return await context.request.headers.get("change-pass");
+function validateInput(data) {
+  return (
+    typeof data === 'object' &&
+    'is-admin' in data &&
+    'is-logged-in' in data &&
+    'change-pass' in data &&
+    'user-input' in data &&
+    typeof data['is-admin'] === 'boolean' &&
+    typeof data['is-logged-in'] === 'boolean' &&
+    typeof data['change-pass'] === 'boolean' &&
+    typeof data['user-input'] === 'string' &&
+    data['user-input'].length > 0
+  );
 }
 
-async function changePasscode(context) {
-    const isAuthed = await context.request.headers.get("is-admin");
-    const isLoggedIn = await context.request.headers.get("is-logged-in");
-    if (isAuthed) {
-        const salt = await bcrypt.genSalt(12)
-        const hashedPass = await bcrypt.hash(context.request.headers.get("user-input"), salt);
-        await context.env.passwordCheck.put("passcode", hashedPass);
-    } else if (isLoggedIn) {
-        return new Response({status:403});
-    } else {
-        return new Response({status:401});
-    }
-}
-
-async function authenticationCheck(context) {
-    const password = await context.env.passwordCheck.get("passcode");
-    const adminPass = await context.env.passwordCheck.get("admin");
-    const userGiven = await context.request.headers.get("user-input");
-    const isValid = await bcrypt.compare(userGiven, password);
-    const isValidAdmin = await bcrypt.compare(userGiven, adminPass);
-    if (isValid) {
-        return [true, false];
-    } else if (isValidAdmin) {
-        return [true, true];
-    } else {
-        return [false, false];
-    }
-}*/
