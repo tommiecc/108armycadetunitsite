@@ -9,7 +9,7 @@ async function testAuthFunction() {
               "is-admin": true,
               "is-logged-in": true,
               "change-pass": true,
-              "user-input": "testpass1234"
+              "user-input": "testpass123"
             }
         },
         {
@@ -18,13 +18,13 @@ async function testAuthFunction() {
             "is-admin": false,
             "is-logged-in": false,
             "change-pass": false,
-            "user-input": "testpass1234"
+            "user-input": "testpass123"
             }
         },
         {
             name: "Test Login (Admin)",
             payload: {
-            "is-admin": true,
+            "is-admin": false,
             "is-logged-in": false,
             "change-pass": false,
             "user-input": "admin"

@@ -105,23 +105,13 @@ export async function onRequestPost(context) {
     const isValidGeneral = await bcrypt.compare(userInput, userHash);
     const isValidAdmin = await bcrypt.compare(userInput, adminHash);
 
-    if (isValidGeneral) {
+    if (isValidGeneral || isValidAdmin) {
         return new Response(JSON.stringify({ 
             success: true, 
             message: 'Authentication successful' ,
-            adminLogin: false
+            adminLogin: isValidAdmin ? true : false
             }), {
             headers: { 'Content-Type': 'application/json', 'isAdmin': false }
-        });
-    }
-
-    if (isValidAdmin) {
-        return new Response(JSON.stringify({ 
-            success: true, 
-            message: 'Authentication successful',
-            adminLogin: true
-            }), {
-            headers: { 'Content-Type': 'application/json' }
         });
     }
 
