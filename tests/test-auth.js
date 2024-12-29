@@ -1,41 +1,52 @@
 // test-auth.js
 async function testAuthFunction() {
-    const BASE_URL = 'https://108armycadetunit.site/auth';  // Replace with your actual URL
+    
+    let BASE_URL = 'https://108armycadetunit.site/auth/changepass'
+
+    const testCase = {
+      name: "Test Change Password",
+      payload: {
+        "is-admin": true,
+        "is-logged-in": true,
+        "user-input": "testpass123"
+      }
+    }
+
+    console.log(`\nRunning: ${testCase.name}`);
+    try {
+      const response = await fetch(BASE_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(testCase.payload)
+      });
+
+      const data = await response;
+      console.log('Response:', data);
+    } catch (error) {
+      console.error('Error:', error)
+    }
+
+
+    BASE_URL = 'https://108armycadetunit.site/auth/authLogin';  // Replace with your actual URL
   
     const testCases = [
         {
-            name: "Test Password Change (Admin)",
-            payload: {
-              "is-admin": true,
-              "is-logged-in": true,
-              "change-pass": true,
-              "user-input": "testpass123"
-            }
-        },
-        {
             name: "Test Login (Normal User)",
             payload: {
-            "is-admin": false,
-            "is-logged-in": false,
-            "change-pass": false,
             "user-input": "testpass123"
             }
         },
         {
             name: "Test Login (Admin)",
             payload: {
-            "is-admin": false,
-            "is-logged-in": false,
-            "change-pass": false,
             "user-input": "admin"
             }
         },
         {
             name: "Test Invalid Login",
             payload: {
-            "is-admin": false,
-            "is-logged-in": false,
-            "change-pass": false,
             "user-input": "WrongPassword"
             }
         }
@@ -52,8 +63,9 @@ async function testAuthFunction() {
           body: JSON.stringify(test.payload)
         });
   
-        const data = await response.json();
-        console.log('Status:', response.status);
+        const data = await response;
+        
+        //console.log('Status:', response.status);
         console.log('Response:', data);
       } catch (error) {
         console.error('Error:', error);
