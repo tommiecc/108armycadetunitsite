@@ -38,11 +38,13 @@ export async function onRequest(context) {
 
 
 function responseHandler(statusCode, messageStr, isAdmin) {
-    return {
-        status: statusCode,
+    return new Response(JSON.stringify({
         isAdmin: isAdmin,
         message: messageStr,
-    };
+    }), {
+        status: statusCode,
+        headers: { 'Content-Type': 'application/json' },
+    });
 }
 
 function checkValidPayload(data) {
