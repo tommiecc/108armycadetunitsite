@@ -70,7 +70,7 @@ export default {
 function authenticateLogin() {
   let userInput = document.getElementById("password").value;
 
-  let isAuthed = JSON.stringify(AuthService.checkLogin(userInput));
+  let isAuthed = AuthService.checkLogin(userInput);
 
   console.log(isAuthed);
 }
