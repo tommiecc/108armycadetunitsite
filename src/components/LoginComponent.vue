@@ -72,7 +72,7 @@ function authenticateLogin() {
 
   let isAuthed = JSON.stringify(AuthService.checkLogin(userInput));
 
-  print(isAuthed);
+  console.log(isAuthed);
 }
 
 </script>
