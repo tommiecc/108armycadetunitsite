@@ -65,6 +65,8 @@ export default {
 
       const response = await AuthService.checkLogin(userInput);
 
+      console.log(response);
+
       if (response.status === 200) {
         AuthStoreService.login(response.data.isAdmin);
         this.$router.push('/membersOnly');
@@ -72,7 +74,6 @@ export default {
         try {
           this.showAlert(`${response.status} - ${response.data.message}`);
         } catch (exception) {
-          console.log(response, exception)
           this.showAlert(`500 - Internal Server Error`);
         }
       }
