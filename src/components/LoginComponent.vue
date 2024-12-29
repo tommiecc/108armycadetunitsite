@@ -2,6 +2,7 @@
   import AuthStoreService from '@/services/auth_store_service.js'
   import AuthService from '@/services/auth_service.js'
   import AlertComponent from '@/components/AlertComponent.vue'
+  import Router from '@/router/index.js'
   import App from '@/App.vue'
 
   import { ref } from 'vue'
@@ -69,10 +70,9 @@ export default {
 function authenticateLogin() {
   let userInput = document.getElementById("password").value;
 
-  let isAuthed = AuthService.checkLogin(userInput);
+  let isAuthed = JSON.stringify(AuthService.checkLogin(userInput));
 
-  console.log(isAuthed);
-  
+  print(isAuthed);
 }
 
 </script>

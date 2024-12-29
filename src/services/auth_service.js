@@ -15,7 +15,10 @@ const AuthService = {
     
             const data = await response.json();
 
-            return data;
+            return {
+                "status": response.status,
+                "data": data
+            }
         } catch (exception) {
             return exception.message;
         }
