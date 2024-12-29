@@ -1,5 +1,6 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
+import AlertComponent from './components/AlertComponent.vue'
 </script>
 
 <template>
@@ -49,6 +50,8 @@ import { RouterLink, RouterView } from 'vue-router'
 
         <RouterView />
 
+        
+
         <!-- Footer -->
         <footer class="bg-[#1a3409] text-center p-5 mt-5">
           <p class="text-white">© 2024 108 Army Cadet Unit - Kenmore | Last Updated: December 28, 2024</p>
@@ -67,12 +70,10 @@ import { RouterLink, RouterView } from 'vue-router'
 
 <script>
 export default {
-  computed: {
-    isLocationDisallow() {
-      // Check the current route and decide if it's a standalone page
-      return this.$route.path === "/LocationDisallow";
-    },
-  },
+  isLocationDisallow() {
+    // Check the current route and decide if it's a standalone page
+    return this.$route.path === "/LocationDisallow";
+  }
 };
 
 </script>

@@ -2,7 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import NotFoundComponent from '@/components/NotFoundComponent.vue'
 
-import Main from '@/main' 
+// import services
+import AuthStoreService from '@/services/auth_store_service'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -44,7 +45,7 @@ const router = createRouter({
       name: 'login',
       component: () => import('../components/LoginComponent.vue'),
       meta: {
-        requiresAuth: true,
+        requiresAuth: false,
       }
     },
     {
@@ -60,10 +61,10 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth) {
-    if (!Main.$cookies.get(isLoggedIn)) {
-      next('/login')
-    } else next()
-  } else next()
+    if (!AuthStoreService.isLoggedIn()) next('/login');
+    else next();
+  }
+  else next()
 })
 
 export default router

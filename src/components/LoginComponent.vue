@@ -1,3 +1,12 @@
+<script setup>
+  import AuthStoreService from '@/services/auth_store_service.js'
+  import AuthService from '@/services/auth_service.js'
+  import AlertComponent from '@/components/AlertComponent.vue'
+  import App from '@/App.vue'
+
+  import { ref } from 'vue'
+</script>
+
 <template>
   <div class="max-w-md mx-auto my-10 p-8 bg-gray-50 border-2 border-[#1a3409] rounded-lg shadow-lg">
     <!-- Login Header -->
@@ -18,7 +27,6 @@
         <input 
           type="password" 
           id="password" 
-          v-model="password"
           placeholder="Enter your password"
           class="w-full px-3 py-2 border-2 bg-white border-[#2d4f0c] rounded focus:outline-none focus:border-[#c4a000] focus:ring-1 focus:ring-[#c4a000]"
         >
@@ -26,12 +34,11 @@
 
       <!-- Login Button -->
       <button 
-        type="submit" 
+        type="submit"
+        id="submitButton" 
+        @click="authLogin"
         class="w-full py-3 px-4 bg-[#2d4f0c] hover:bg-[#4a7012] text-white font-bold rounded transition-colors duration-200"
-        :disabled="isLoading"
-      >
-        {{ isLoading ? 'Logging in...' : 'Login to Members Area' }}
-      </button>
+      >Log In</button>
 
       <!-- Footer Links -->
       <div class="text-center text-sm space-y-2">
@@ -41,4 +48,31 @@
       </div>
     </form>
   </div>
+
+  <AlertComponent ref="alert" v-model:message="alertMessage">This is an alert</AlertComponent>
+
 </template>
+
+<script>
+export default {
+  components: { AlertComponent },
+  methods: {
+    showAlert() {
+      this.$refs.alert.show();
+    },
+    authLogin() {
+      authenticateLogin();
+    }
+  }
+}
+
+function authenticateLogin() {
+  let userInput = document.getElementById("password").value;
+
+  let isAuthed = AuthService.checkLogin(userInput);
+
+  console.log(isAuthed);
+  
+}
+
+</script>

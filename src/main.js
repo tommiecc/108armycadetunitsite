@@ -6,20 +6,12 @@ import router from './router'
 
 import VueCookies from 'vue-cookies'
 
+
+
+
 const app = Vue.createApp(App)
 
 app.use(createPinia())
-app.use(router)
+app.use(router).use(VueCookies, {expires: '1d', secure: true});
 
 app.mount('#app')
-
-
-export default {
-    setup() {
-        const $cookies = Vue.inject('$cookies');
-
-        $cookies.config('1h', '', '', true);
-        $cookies.set(isLoggedIn, false, );
-        $cookies.set(isAdmin, false);
-    }
-}
