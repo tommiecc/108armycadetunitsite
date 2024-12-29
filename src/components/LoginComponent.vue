@@ -2,7 +2,6 @@
   import AuthStoreService from '@/services/auth_store_service.js'
   import AuthService from '@/services/auth_service.js'
   import AlertComponent from '@/components/AlertComponent.vue'
-  import Router from '@/router/index.js'
   import App from '@/App.vue'
 
   import { ref } from 'vue'
@@ -50,7 +49,7 @@
     </form>
   </div>
 
-  <AlertComponent ref="alert" v-model:message="alertMessage">This is an alert</AlertComponent>
+  <AlertComponent ref="alert">This is an alert</AlertComponent>
 
 </template>
 
@@ -58,21 +57,27 @@
 export default {
   components: { AlertComponent },
   methods: {
-    showAlert() {
-      this.$refs.alert.show();
+    showAlert(message) {
+      this.$refs.alert.show(message);
     },
-    authLogin() {
-      authenticateLogin();
+    async authLogin() {
+      let userInput = document.getElementById("password").value;
+
+      const response = await AuthService.checkLogin(userInput);
+
+      if (response.status === 200) {
+        AuthStoreService.login(response.data.isAdmin);
+        this.$router.push('/membersOnly');
+      } else {
+        try {
+          this.showAlert(`${response.status} - ${response.data.message}`);
+        } catch (exception) {
+          console.log(response, exception)
+          this.showAlert(`500 - Internal Server Error`);
+        }
+      }
     }
   }
-}
-
-function authenticateLogin() {
-  let userInput = document.getElementById("password").value;
-
-  let isAuthed = AuthService.checkLogin(userInput);
-
-  console.log(isAuthed);
 }
 
 </script>
