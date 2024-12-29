@@ -38,12 +38,10 @@ export async function onRequest(context) {
 
 
 function responseHandler(statusCode, messageStr, isAdmin) {
-    return new Response(JSON.stringify({
+    return JSON.stringify({
+        status: statusCode,
         isAdmin: isAdmin,
         message: messageStr,
-    }), {
-        status: statusCode,
-        headers: { "Content-Type": "application/json" }
     });
 }
 
