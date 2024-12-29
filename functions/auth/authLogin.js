@@ -21,8 +21,8 @@ export async function onRequest(context) {
             'userInput': userInput
         } = data
 
-        const passHash = await env.checkPassword.get('passcode');
-        const adminHash = await env.checkPassword.get('admin');
+        const passHash = await env.passwordCheck.get('passcode');
+        const adminHash = await env.passwordCheck.get('admin');
 
         const isCorrectPass = await bcrypt.compare(userInput, passHash);
         const isCorrectAdminPass = await bcrypt.compare(userInput, adminHash);
