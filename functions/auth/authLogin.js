@@ -17,9 +17,7 @@ export async function onRequest(context) {
 
         if (!checkValidPayload(data)) return responseHandler(400, "Invalid Input Format", null);
         
-        const {
-            'userInput': userInput
-        } = data
+        const userInput = data['user-input'];
 
         const passHash = await env.passwordCheck.get('passcode');
         const adminHash = await env.passwordCheck.get('admin');
