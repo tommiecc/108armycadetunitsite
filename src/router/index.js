@@ -43,7 +43,7 @@ const router = createRouter({
       }
     },
     {
-      path: '/MembersArea',
+      path: '/membersOnlycad',
       name: 'membersArea',
       component: () => import('../views/MemberAreaView.vue'), 
       meta: {
