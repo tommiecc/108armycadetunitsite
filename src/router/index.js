@@ -2,18 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import NotFoundComponent from '@/components/NotFoundComponent.vue'
 
-import VuexPersistence from 'vuex-persist'
-
-const vuexLocal = new VuexPersistence({
-  storage: window.localStorage
-});
-
-const store = {
-  state: {},
-  mutations: {},
-  actions: {},
-  plugins: [vuexLocal.plugin]
-}
+import Main from '@/main' 
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -51,9 +40,12 @@ const router = createRouter({
       }
     },
     {
-      path: '/Login',
+      path: '/login',
       name: 'login',
       component: () => import('../components/LoginComponent.vue'),
+      meta: {
+        requiresAuth: true,
+      }
     },
     {
       path: '/:pathMatch(.*)*', 
@@ -64,6 +56,14 @@ const router = createRouter({
       }
     },
   ],
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth) {
+    if (!Main.$cookies.get(isLoggedIn)) {
+      next('/login')
+    } else next()
+  } else next()
 })
 
 export default router
