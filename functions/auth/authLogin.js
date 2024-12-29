@@ -9,7 +9,7 @@ PAYLOAD:
 
 */
 
-export async function onRequest() {
+export async function onRequest(context) {
     try {
 
         const { request, env } = context;

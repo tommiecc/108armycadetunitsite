@@ -22,7 +22,8 @@ async function testAuthFunction() {
         body: JSON.stringify(testCase.payload)
       });
 
-      const data = await response;
+      const data = await response.json();
+      console.log('Status:', response.status)
       console.log('Response:', data);
     } catch (error) {
       console.error('Error:', error)
@@ -63,9 +64,9 @@ async function testAuthFunction() {
           body: JSON.stringify(test.payload)
         });
   
-        const data = await response;
+        const data = await response.json();
         
-        //console.log('Status:', response.status);
+        console.log('Status:', response.status);
         console.log('Response:', data);
       } catch (error) {
         console.error('Error:', error);
