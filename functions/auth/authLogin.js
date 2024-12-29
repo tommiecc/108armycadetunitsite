@@ -21,11 +21,11 @@ export async function onRequest(context) {
             'userInput': userInput
         } = data
 
-        const passHash = env.checkPassword.get('passcode');
-        const adminHash = env.checkPassword.get('admin');
+        const passHash = await env.checkPassword.get('passcode');
+        const adminHash = await env.checkPassword.get('admin');
 
-        const isCorrectPass = bcrypt.compare(userInput, passHash);
-        const isCorrectAdminPass = bcrypt.compare(userInput, adminHash);
+        const isCorrectPass = await bcrypt.compare(userInput, passHash);
+        const isCorrectAdminPass = await bcrypt.compare(userInput, adminHash);
 
         if (isCorrectPass || isCorrectAdminPass) {
             return responseHandler(200, "Login Successful", isCorrectAdminPass);
