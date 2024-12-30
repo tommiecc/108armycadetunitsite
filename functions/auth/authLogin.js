@@ -11,7 +11,6 @@ PAYLOAD:
 
 export async function onRequest(context) {
     try {
-
         const { request, env } = context;
         const data = await request.json();
 
@@ -43,7 +42,7 @@ function responseHandler(statusCode, messageStr, isAdmin) {
         message: messageStr,
     }), {
         status: statusCode,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
     });
 }
 

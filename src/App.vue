@@ -13,7 +13,7 @@ import AlertComponent from './components/AlertComponent.vue'
             <img src="/img/logo.png" alt="Unit Crest" class="float-left mr-4" width=100 height=100>
             <div>
               <h1 class="text-3xl font-bold">108 Army Cadet Unit - Kenmore</h1>
-              <h3 class="text-xl mt-2">Courage • Respect • Integrity • Service • Excellence</h3>
+              <h3 class="text-xl mt-2 italic">"A Rising Generation Under a Rising Sun"</h3>
             </div>
           </div>
         </header>
@@ -38,7 +38,7 @@ import AlertComponent from './components/AlertComponent.vue'
         </nav>
 
         <!-- Marquee -->
-        <div class="relative w-full min-h-8 overflow-hidden bg-[#c4a000] text-black">
+        <div class="relative w-full min-h-8 overflow-hidden bg-[#c4a000] text-black" id="marquee">
           <div class="absolute whitespace-nowrap animate-marquee flex items-center pause-hover">
             <span class="marquee-item px-2">Next Parade: Tuesday 1800hrs-2100hrs</span>
             <span class="marquee-item px-2">•</span>

@@ -3,7 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import NotFoundComponent from '@/components/NotFoundComponent.vue'
 
 // import services
-import AuthStoreService from '@/services/auth_store_service'
+import AuthStoreService from '@/services/AuthStoreService'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -37,7 +37,7 @@ const router = createRouter({
       name: 'membersArea',
       component: () => import('../views/MemberAreaView.vue'), 
       meta: {
-        requiresAuth: true,
+        requiresAuth: false,
       }
     },
     {

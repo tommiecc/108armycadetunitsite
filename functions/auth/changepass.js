@@ -45,7 +45,7 @@ function responseHandler(statusCode, messageStr, isSuccessful) {
         message: messageStr,
     }), {
         status: statusCode,
-        headers: { "Content-Type": "application/json" }
+        headers: { "Content-Type": "application/json", 'Access-Control-Allow-Origin': '*'  }
     });
 }
 

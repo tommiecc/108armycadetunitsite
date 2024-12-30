@@ -1,5 +1,5 @@
 <template>
-  <div v-if="visible" role="alert" class="alert" :class="{ 'fade-out': fadingOut }" @click="fadeOut">
+  <div v-if="visible" role="alert" class="w-full p-2 bg-red-800 text-white font-semibold justify-center flex" @click="hide">
     <div class="px-2">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -29,57 +29,19 @@
     data() {
       return {
         visible: false,
-        fadingOut: false,
+        message: '',
       };
     },
     methods: {
       show(message) {
         if (message) {
-          this.$emit('update:message', message);
+          this.message = message;
         }
         this.visible = true;
       },
-      fadeOut() {
-        this.fadingOut = true;
-        setTimeout(() => {
-          this.visible = false;
-          this.fadingOut = false;
-        }, 500);
+      hide() {
+        this.visible = false;
       },
     },
   };
 </script>
-
-<style scoped>
-
-.alert {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #d70000;
-  color: white;
-  font-weight: bold;
-  padding: 1rem;
-  width: 100%;
-  position: fixed;
-  bottom: -100px; /* Start outside the viewport */
-  left: 50%;
-  transform: translateX(-50%);
-  animation: floatUp 0.5s forwards;
-  transition: opacity 0.5s;
-}
-
-.alert.fade-out {
-  opacity: 0;
-  transform: translateX(-50%) translateY(100px); /* Move back down during fade-out */
-}
-
-@keyframes floatUp {
-  from {
-    transform: translateX(-50%) translateY(100px); /* Start below the viewport */
-  }
-  to {
-    transform: translateX(-50%) translateY(0); /* End at the bottom of the viewport */
-  }
-}
-</style>

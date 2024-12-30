@@ -1,6 +1,6 @@
 <script setup>
-  import AuthStoreService from '@/services/auth_store_service.js'
-  import AuthService from '@/services/auth_service.js'
+  import AuthStoreService from '@/services/AuthStoreService'
+  import AuthService from '@/services/AuthService'
   import AlertComponent from '@/components/AlertComponent.vue'
   import App from '@/App.vue'
 
@@ -64,7 +64,7 @@ export default {
       let userInput = document.getElementById("password").value;
 
       const response = await AuthService.checkLogin(userInput);
-
+      
       if (response.status === 200) {
         AuthStoreService.login(response.data.isAdmin);
         this.$router.push('/membersOnly');

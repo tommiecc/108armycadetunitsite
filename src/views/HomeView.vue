@@ -9,7 +9,7 @@
 
   <br>
 
-  <div class="grid grid-cols-3 gap-4 px-6">
+  <div class="flex justify-between flex-col md:flex-row px-4">
     <div>
       <div class="card bg-base-100 image-full w-72 min-h-80 shadow-xl hover:scale-105">
         <figure>
@@ -75,7 +75,7 @@
 
   <br>
 
-  <div class="grid grid-cols-3 gap-4 px-6">
+  <div class="flex justify-between flex-col md:flex-row px-4">
     <div>
       <div class="card bg-base-100 image-full w-72 min-h-80 max-h shadow-xl hover:scale-105">
         <figure>
