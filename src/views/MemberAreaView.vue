@@ -3,7 +3,6 @@ import { ref, onMounted, nextTick, useTemplateRef } from 'vue'
 import TurndownService from 'turndown'
 import showdown from 'showdown'
 import { Base64 } from 'js-base64'
-import GithubService from '@/services/GithubService'
 
 const isAdmin = ref(true);
 const activeTab = ref('tab1');
