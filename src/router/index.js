@@ -37,7 +37,7 @@ const router = createRouter({
       name: 'membersArea',
       component: () => import('../views/MemberAreaView.vue'), 
       meta: {
-        requiresAuth: false,
+        requiresAuth: true,
       }
     },
     {

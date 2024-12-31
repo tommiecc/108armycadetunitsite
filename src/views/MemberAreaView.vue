@@ -1,18 +1,11 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import FetcherService from '@/services/FetcherService'
-
 
 const isAdmin = ref(true);
 const activeTab = ref('tab1');
 
 const tabClicked = (tabId) => {
   activeTab.value = tabId;
-}
-
-const test = async () => {
-  const res = await FetcherService.fetchContent("src/components/App.vue");
-  console.log(res);
 }
 
 </script>
@@ -118,7 +111,7 @@ const test = async () => {
                 <textarea class="textarea textarea-bordered bg-white border-black w-full textarea-s"></textarea>
               </div>
               <div class="flex float-right p-2">
-                <button class="bg-[#1a3409] text-white w-full text-left px-4 py-2 rounded-md transition-colors duration-150 hover:bg-[#c4a000]" @click="test()">Save Changes</button>
+                <button class="bg-[#1a3409] text-white w-full text-left px-4 py-2 rounded-md transition-colors duration-150 hover:bg-[#c4a000]">Save Changes</button>
               </div>
             </div>
             <div v-if="activeTab === 'tab5'">Password</div>

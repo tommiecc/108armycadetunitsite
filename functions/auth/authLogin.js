@@ -12,6 +12,7 @@ PAYLOAD:
 export async function onRequest(context) {
     try {
         const { request, env } = context;
+
         const data = await request.json();
 
         if (!checkValidPayload(data)) return responseHandler(400, "Invalid Input Format", null);
