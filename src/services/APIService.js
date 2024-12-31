@@ -2,9 +2,9 @@
 
 const APIService = {
     async readData(element) {
-        const BASE_URL = "https://108armycadetunit.site/api";
+        const BASE_URL = "https://108armycadetunit.site/api/readedit";
         const res = fetch(BASE_URL, {
-            method: "GET",
+            method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
@@ -13,9 +13,11 @@ const APIService = {
                 "element": element,
                 "updatedContent": null,
             })
-        });
+        }); 
 
-        return await res.text();
+        console.log(res);
+
+        return null;
     }
 };
 
