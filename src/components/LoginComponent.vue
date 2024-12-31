@@ -49,7 +49,7 @@
     </form>
   </div>
 
-  <AlertComponent ref="alert">This is an alert</AlertComponent>
+  <AlertComponent ref="alert"></AlertComponent>
 
 </template>
 

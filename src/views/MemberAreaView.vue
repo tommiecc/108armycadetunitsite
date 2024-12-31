@@ -1,12 +1,63 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, nextTick, useTemplateRef } from 'vue'
+import TurndownService from 'turndown'
+import showdown from 'showdown'
+import { Base64 } from 'js-base64'
+import GithubService from '@/services/GithubService'
 
 const isAdmin = ref(true);
 const activeTab = ref('tab1');
 
+let marqueeContent = ref('');
+
+const contents = {  "marquee": marqueeContent };
+
 const tabClicked = (tabId) => {
   activeTab.value = tabId;
 }
+
+const updateMarquee = () => {
+  const content = contents["marquee"].value;
+  const converter = new showdown.Converter();
+
+  const items = content.split(" • ");
+  let joinedHtml = "";
+
+  // convert each item to HTML
+  for (let i = 0; i < items.length; i++) {
+    let html = converter.makeHtml(items[i]);
+    html = html.concat("<p>•</p>");
+    joinedHtml = joinedHtml.concat(html);
+  }
+
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(joinedHtml, "text/html");
+
+  const pElement = doc.querySelectorAll('p');
+
+  // replace p elements with span and add styles
+  pElement.forEach(p => {
+    const span = doc.createElement('span');
+    span.innerHTML = p.innerHTML;
+    span.classList.add("marquee-item", "px-2");
+
+    // replace p with span
+    p.replaceWith(span);
+  });
+
+  const a = doc.querySelector('a');
+  if (a) {
+    a.classList.add("text-green-900", "font-semibold", "hover:text-white", "hover:scale-150");
+  }
+}
+
+const grabAndFill = (filename) => {
+  return;
+}
+
+onMounted(() => {
+  grabAndFill("marquee");
+})
 
 </script>
 
@@ -102,16 +153,16 @@ const tabClicked = (tabId) => {
             <div v-if="activeTab === 'tab4'">
               <h4 class="text-black text-xl font-semibold text-balance py-2">Edit Marquee</h4>
               <p>
-                You can edit the marquee by entering markdown into the box below. Every new line will be an item in the marquee.
+                You can edit the marquee by entering markdown into the box below. Each item is ended with a "•" symbol.
                 <br>
                 You can learn more about markdown <a href="" target="_blank" class="text-[#1a3409] font-semibold hover:text-[#c4a000]">here</a>.
               </p>
               <br>
               <div class="flex justify-center">
-                <textarea class="textarea textarea-bordered bg-white border-black w-full textarea-s"></textarea>
+                <textarea class="textarea textarea-bordered bg-white border-black w-full textarea-s text-black" v-model="marqueeContent"></textarea>
               </div>
               <div class="flex float-right p-2">
-                <button class="bg-[#1a3409] text-white w-full text-left px-4 py-2 rounded-md transition-colors duration-150 hover:bg-[#c4a000]">Save Changes</button>
+                <button class="bg-[#1a3409] text-white w-full text-left px-4 py-2 rounded-md transition-colors duration-150 hover:bg-[#c4a000]" @click="updateMarquee()">Save Changes</button>
               </div>
             </div>
             <div v-if="activeTab === 'tab5'">Password</div>

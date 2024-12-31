@@ -17,9 +17,11 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "flyonui": "^1.2.0",
+    "js-base64": "^3.7.7",
     "octokit": "^4.0.3",
     "pinia": "^2.2.6",
     "postcss": "^8.4.49",
+    "showdown": "^2.1.0",
     "turndown": "^7.2.0",
     "vue": "^3.5.13",
     "vue-router": "^4.4.5"

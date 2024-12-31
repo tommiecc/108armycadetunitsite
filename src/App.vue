@@ -1,10 +1,25 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterLink, RouterView, useRoute } from 'vue-router'
+import { ref, onMounted } from 'vue'
 import AlertComponent from './components/AlertComponent.vue'
+import APIService from './services/APIService'
+
+const route = useRoute();
+const insertable = ref(null);
+
+const isLocationDisallow = () => {
+  // Check the current route and decide if it's a standalone page
+  return route.path === "/LocationDisallow";
+}
+
+onMounted(() => {
+  insertable.value = APIService.readData("marquee");
+}); 
+
 </script>
 
 <template>
-  <span v-if="!LocationDisallow">
+  <span v-if="!isLocationDisallow()">
     <span class="min-h-screen">
       <div class="container mx-auto max-w-full bg-white shadow-lg">
         <!-- Header -->
@@ -38,19 +53,11 @@ import AlertComponent from './components/AlertComponent.vue'
         </nav>
 
         <!-- Marquee -->
-        <div class="relative w-full min-h-8 overflow-hidden bg-[#c4a000] text-black" id="marquee">
-          <div class="absolute whitespace-nowrap animate-marquee flex items-center pause-hover">
-            <span class="marquee-item px-2">Next Parade: Tuesday 1800hrs-2100hrs</span>
-            <span class="marquee-item px-2">•</span>
-            <span class="marquee-item px-2">Promotion Applications Now Open. <a href="#" class="text-green-900 font-semibold hover:text-white hover:scale-150">Apply Here!</a></span>
-            <span class="marquee-item px-2">•</span>
-            <span class="marquee-item px-2">Nominate for Ex ... <a href="#" class="text-green-900 font-semibold hover:text-white hover:scale-150">Now!</a></span>
-          </div>
-        </div>
+        <span ref="insertable">
+
+        </span>
 
         <RouterView />
-
-        
 
         <!-- Footer -->
         <footer class="bg-[#1a3409] text-center p-5 mt-5">
@@ -70,10 +77,15 @@ import AlertComponent from './components/AlertComponent.vue'
 
 <script>
 export default {
-  isLocationDisallow() {
-    // Check the current route and decide if it's a standalone page
-    return this.$route.path === "/LocationDisallow";
-  }
+  data() {
+    return {
+      htmlContent: "",
+    };
+  },
+  
+  onMounted() {
+    
+  },
 };
 
 </script>

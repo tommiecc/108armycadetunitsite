@@ -43,7 +43,7 @@ function responseHandler(statusCode, messageStr, isAdmin) {
         message: messageStr,
     }), {
         status: statusCode,
-        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+        headers: { 'Content-Type': 'application/json' },
     });
 }
 
