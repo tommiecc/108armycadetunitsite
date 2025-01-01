@@ -2,7 +2,7 @@
 import { ref, onMounted, nextTick, useTemplateRef } from 'vue'
 import TurndownService from 'turndown'
 import showdown from 'showdown'
-import { Base64 } from 'js-base64'
+import GalleryEditComponent from '@/components/GalleryEditComponent.vue'
 
 const isAdmin = ref(true);
 const activeTab = ref('tab1');
@@ -58,6 +58,8 @@ onMounted(() => {
   grabAndFill("marquee");
 })
 
+
+
 </script>
 
 <template>
@@ -68,7 +70,7 @@ onMounted(() => {
       </div>
     </div>
     <main class="flex px-2">
-        <div class="bg-gray-50 w-64 p-4 rounded-lg shadow-sm">
+        <div class="bg-gray-50 w-64 p-4 rounded-lg shadow-sm max-h-90">
           <ul class="space-y-2">
               <li>
                   <button 
@@ -147,7 +149,10 @@ onMounted(() => {
                 You can learn more about markdown <a href="" target="_blank" class="text-[#1a3409] font-semibold hover:text-[#c4a000]">here</a>.
               </p>
             </div>
-            <div v-if="activeTab === 'tab2'">Gallery</div>
+            <div v-if="activeTab === 'tab2'">
+              <h4 class="text-black text-xl font-semibold text-balance py-2">Edit Gallery</h4>
+              <GalleryEditComponent />
+            </div>
             <div v-if="activeTab === 'tab3'">Members</div>
             <div v-if="activeTab === 'tab4'">
               <h4 class="text-black text-xl font-semibold text-balance py-2">Edit Marquee</h4>

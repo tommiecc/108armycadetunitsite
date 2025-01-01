@@ -25,6 +25,14 @@ const router = createRouter({
       }
     },
     {
+      path: '/gallery',
+      name: 'gallery',
+      component: () => import('../views/GalleryView.vue'),
+      meta: {
+        requiresAuth: false,
+      }
+    },
+    {
       path: '/LocationDisallow',
       name: "locationDisallow",
       component: () => import('../components/LocationDisallowComponent.vue'),

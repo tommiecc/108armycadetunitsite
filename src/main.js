@@ -12,6 +12,6 @@ import VueCookies from 'vue-cookies'
 const app = Vue.createApp(App)
 
 app.use(createPinia())
-app.use(router).use(VueCookies, {expires: '1d', secure: true});
+app.use(router).use(VueCookies, {expires: '1h', secure: true});
 
 app.mount('#app')

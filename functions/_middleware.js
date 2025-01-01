@@ -1,8 +1,6 @@
 export async function onRequest(context) {
     const { request } = context;
 
-    console.log(`Middleware OK for: ${request.url}`);
-
     const origin = request.headers.get('Origin');
     const userAgent = request.headers.get('User-Agent');
 

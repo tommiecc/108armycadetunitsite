@@ -111,7 +111,7 @@
       <div class="card bg-base-100 image-full w-72 min-h-80 shadow-xl hover:scale-105">
         <figure>
           <img
-            src="@/assets/img/starsafari.jpg"
+            src="@/assets/img/starsafari2.jpg"
             alt="Cadets on Ex Starlight Safari 2024" />
         </figure>
         <div class="card-body bg-black bg-opacity-40 rounded-2xl">
