@@ -40,7 +40,7 @@ const GalleryService = {
     },
     toggleList(imageName) {
         const index = whitelist.value.findIndex(item => item.name === imageName);
-        if (index === -1) {
+        if (index !== -1) {
             // Add the image object to the whitelist
             const imageObj = {
                 path: `../assets/img/${imageName}`,
