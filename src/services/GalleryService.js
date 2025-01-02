@@ -4,18 +4,33 @@ const whitelist = ref([]);
 
 
 const GalleryService = {
-    loadList() {
+    async loadList() {
         try {
-            const saved = localStorage.getItem('galleryWhitelist');
+            const res = await fetch("https://108armycadetunit.site/api/images", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+            const saved = await res.json(); 
+            console.log(saved);
             if (saved) whitelist.value = JSON.parse(saved);
         } catch (error) {
             console.error(error.message);
             whitelist.value = [];
         }
     },
-    saveList() {
+    async saveList() {
         try {
-            localStorage.setItem('galleryWhitelist', JSON.stringify(whitelist.value));
+            await fetch("https://108armycadetunit.site/api/images", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: {
+                    "updatedContent": whitelist.value
+                }
+            })
         } catch (error) {
             console.error(error.message);
         }

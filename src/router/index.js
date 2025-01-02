@@ -33,6 +33,14 @@ const router = createRouter({
       }
     },
     {
+      path: '/copyright',
+      name: 'copyright',
+      component: () => import('../views/CopyrightView.vue'),
+      meta: {
+        requiresAuth: false,
+      }
+    },
+    {
       path: '/LocationDisallow',
       name: "locationDisallow",
       component: () => import('../components/LocationDisallowComponent.vue'),

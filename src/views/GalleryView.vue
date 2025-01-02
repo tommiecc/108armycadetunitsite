@@ -54,7 +54,7 @@ onMounted(() => {
     loadImages();
     setInterval(() => {
       isLoading.value = false;
-    }, 2000);
+    }, 3000); // three second buffer allows image requests to be resolved.
 })
 
 </script>

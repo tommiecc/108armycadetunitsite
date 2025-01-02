@@ -62,7 +62,7 @@ onMounted(() => {
         <!-- Footer -->
         <footer class="bg-[#1a3409] text-center p-5 mt-5">
           <p class="text-white">© 2024 108 Army Cadet Unit - Kenmore | Last Updated: December 28, 2024</p>
-          <a href="/copyright" class="text-white hover:text-[#c4a000] hover:font-semibold">Copyright</a>
+          <a href="/copyright" class="text-white hover:text-[#c4a000] hover:font-semibold">Privacy | Copyright | Disclaimer</a>
         </footer>
       </div>
     </span>
