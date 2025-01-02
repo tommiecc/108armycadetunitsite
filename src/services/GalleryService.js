@@ -13,10 +13,10 @@ const GalleryService = {
                 }
             });
             const saved = await res.json(); 
-            console.log(saved);
-            if (saved) whitelist.value = JSON.parse(saved);
+            if (saved.images !== '') whitelist.value = saved.images;
+            whitelist.value = [];
         } catch (error) {
-            console.error(error.message);
+            console.error(error);
             whitelist.value = [];
         }
     },

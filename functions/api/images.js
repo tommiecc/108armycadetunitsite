@@ -14,7 +14,7 @@ export async function onRequest(context) {
         } else {
             const data = await context.request.json();
             const updatedContent = data["content"];
-            if (updatedContent) context.env.info.put("images", updatedContent);
+            if (updatedContent) await context.env.info.put("images", updatedContent);
         }
     } catch (error) {
         return new Response(JSON.stringify({
