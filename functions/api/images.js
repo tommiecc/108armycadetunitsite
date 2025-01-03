@@ -1,7 +1,9 @@
 export async function onRequest(context) {
     try {
+        const { env, request } = context;
+
         if (context.request.method === "GET") {
-            const images = await context.env.info.get("images");
+            const images = await env.info.get("images");
             
             return new Response(JSON.stringify({
                 images: images
@@ -11,9 +13,9 @@ export async function onRequest(context) {
                     "Content-Type": "application/json"
                 }
             });
-        } else if (context.request.method === "POST") {
-            const data = await context.request.json();
-            const updatedContent = data["content"];
+        } else if (request.method === "POST") {
+            const data = await request.json();
+            const updatedContent = data['content'];
             
             if (!updatedContent) {
                 return new Response(JSON.stringify({
@@ -26,12 +28,7 @@ export async function onRequest(context) {
                 });
             }
 
-            // Ensure we're storing a string in KV
-            const contentString = typeof updatedContent === 'object' 
-                ? JSON.stringify(updatedContent) 
-                : String(updatedContent);
-
-            await context.env.info.put("images", contentString);
+            await env.info.put("images", updatedContent);
             
             return new Response(JSON.stringify({
                 message: "Successfully updated images"
