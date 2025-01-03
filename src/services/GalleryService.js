@@ -22,15 +22,18 @@ const GalleryService = {
     },
     async saveList() {
         try {
-            await fetch("https://108armycadetunit.site/api/images", {
+            const res = await fetch("https://108armycadetunit.site/api/images", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: {
-                    "updatedContent": whitelist.value
-                }
+                body: JSON.stringify({
+                    "content": String(whitelist.value)
+                })
             })
+            if (res.status !== 200) {
+                console.error(await res.text());
+            }
         } catch (error) {
             console.error(error.message);
         }

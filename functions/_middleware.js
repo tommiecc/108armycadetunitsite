@@ -1,37 +1,54 @@
 export async function onRequest(context) {
-    const { request } = context;
+    try {
+        const { request } = context;
+        const origin = request.headers.get('Origin') || '*';
 
-    const origin = request.headers.get('Origin');
-    const userAgent = request.headers.get('User-Agent');
+        // Preflight request handling
+        if (request.method === 'OPTIONS') {
+            return new Response(null, {
+                status: 204,
+                headers: {
+                    'Access-Control-Allow-Origin': origin,
+                    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+                    'Access-Control-Allow-Headers': '*',
+                    'Access-Control-Max-Age': '86400',
+                    'Access-Control-Allow-Credentials': 'true'
+                }
+            });
+        }
 
-    if (userAgent && (
-        userAgent.includes('curl') ||
-        userAgent.includes('Postman') ||
-        userAgent.includes('wget') ||
-        userAgent.includes('HTTPie') ||
-        userAgent.includes('python-requests')
-    )) {
-        return responseHandler(403, "User Agent Disallow", null);
-    }
+        const response = await context.next();
 
-    if (request.method === 'OPTIONS') {
-        return new Response(null, {
+        // Add CORS headers to actual response
+        const corsHeaders = {
+            'Access-Control-Allow-Origin': origin,
+            'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+            'Access-Control-Allow-Headers': '*',
+            'Access-Control-Allow-Credentials': 'true'
+        };
+
+        const newResponse = new Response(response.body, {
+            status: response.status,
+            statusText: response.statusText,
             headers: {
-                'Access-Control-Allow-Origin': origin || '*',
-                'Access-Control-Allow-Methods': 'GET, POST',
-                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-                'Access-Control-Max-Age': '86400',
+                ...Object.fromEntries(response.headers),
+                ...corsHeaders
+            }
+        });
+
+        return newResponse;
+
+    } catch (error) {
+        console.error('Middleware error:', error);
+        return new Response(JSON.stringify({ error: error.message }), {
+            status: 500,
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+                'Access-Control-Allow-Headers': '*',
+                'Access-Control-Allow-Credentials': 'true'
             }
         });
     }
-
-    const response = await context.next();
-    const newResponse = new Response(response.body, response);
-
-    newResponse.headers.set('Access-Control-Allow-Origin', origin || '*');
-    newResponse.headers.set('Access-Control-Allow-Methods', 'GET, POST');
-    newResponse.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-
-
-    return newResponse;
 }
