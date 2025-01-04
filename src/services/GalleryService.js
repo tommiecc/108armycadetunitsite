@@ -1,58 +1,50 @@
+import { useSecureApi } from '@/utils/useSecureApi';
+import GithubService from './GithubService';
 import { ref } from 'vue'
+
+const { makeRequest, error, loading } = useSecureApi('/api');
 
 const whitelist = ref([]);
 
 
 const GalleryService = {
+    async uploadImage(image) {
+        GithubService.uploadFile(image);
+    },
     async loadList() {
         try {
-            const res = await fetch("https://108armycadetunit.site/api/images", {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json"
-                }
+            const saved = await makeRequest('/images', {
+                method: 'GET'
             });
-            const saved = await res.json(); 
-            if (saved.images !== '') whitelist.value = saved.images;
-            whitelist.value = [];
+            const final = JSON.parse(saved.images);
+            whitelist.value = final;
         } catch (error) {
             console.error(error);
-            whitelist.value = [];
         }
     },
     async saveList() {
         try {
-            const res = await fetch("https://108armycadetunit.site/api/images", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
+            const res = await makeRequest('/images', {
+                method: 'POST',
                 body: JSON.stringify({
-                    "content": String(whitelist.value)
+                    "content": JSON.stringify(whitelist.value)
                 })
-            })
-            if (res.status !== 200) {
-                console.error(await res.text());
-            }
+            });
         } catch (error) {
             console.error(error.message);
         }
     },
     isWhitelisted(imageName) {
-        return whitelist.value.some(item => item.name === imageName);
+        return whitelist.value.some(item =>
+            JSON.stringify(item) === JSON.stringify(imageName)
+        );
     },
     toggleList(imageName) {
-        const index = whitelist.value.findIndex(item => item.name === imageName);
+        const index = whitelist.value.findIndex(image => JSON.stringify(image) === JSON.stringify(imageName));
         if (index !== -1) {
-            // Add the image object to the whitelist
-            const imageObj = {
-                path: `../assets/img/${imageName}`,
-                url: `/src/assets/img/${imageName}`,
-                name: imageName
-            };
-            whitelist.value.push(imageObj);
+            whitelist.value.splice(index, 1);
         } else {
-            whitelist.value.splice(index, 1); // Remove the image object from the whitelist
+            whitelist.value.push(imageName);
         }
         this.saveList();
     },

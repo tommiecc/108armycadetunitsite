@@ -135,16 +135,11 @@ const loadImages = () => {
 }
 
 const isWhitelisted = (image) => {
-  const img = JSON.stringify(image);
-  const res = GalleryService.whitelist.value.some(item => {
-    const itemImg = JSON.stringify(item.name);
-    return itemImg === img;
-  });
-  return res;
+  return GalleryService.isWhitelisted(image);
 }
 
 const toggleList = (image) => {
-    GalleryService.toggleList(image);
+  GalleryService.toggleList(image);
 }
 
 
@@ -160,32 +155,32 @@ const handleFileSelect = (e) => {
     handleFiles(files);
 }
 
-const handleFiles = (files) => {
-    files.forEach(file => {
-        if (!file.type.startsWith('image/')) return;
+const handleFiles = (files, isAdmin) => {
+  files.forEach(file => {
+      if (!file.type.startsWith('image/')) return;
 
-        const uploadFile = {
-            id: `upload-${uploadId++}`,
-            name: file.name,
-            progress: 0,
-        };
+      const uploadFile = {
+          id: `upload-${uploadId++}`,
+          name: file.name,
+          progress: 0,
+      };
 
-        uploadingFiles.value = [...uploadFiles.value, uploadFile];
-        let progress = 0;
-        const interval = setInterval(() => {
-           progress += 5;
-           uploadFile.progress = progress;
-           
-           if (progress >= 100) {
+      uploadingFiles.value = [...uploadFiles.value, uploadFile];
+      let progress = 0;
+      const interval = setInterval(() => {
+          progress += 5;
+          uploadFile.progress = progress;
+          
+          if (progress >= 100) {
             clearInterval(interval);
             setTimeout(() => {
                 uploadingFiles.value = uploadFiles.value.filter(f => f.id !== uploadFile.id);
-                // TODO: Upload File
+                GalleryService.uploadImage(file);
                 loadImages()
             }, 500);
-           }
-        }, 100);
-    })
+          }
+      }, 100);
+  })
 }
 
 onMounted(() => {

@@ -15,7 +15,10 @@
     "deploy": "npm run build && wrangler pages deploy ./dist"
   },
   "dependencies": {
+    "@cloudflare/util-logger": "^1.0.32",
     "bcryptjs": "^2.4.3",
+    "cloudflare": "^3.5.0",
+    "express-rate-limit": "^7.5.0",
     "flyonui": "^1.2.0",
     "js-base64": "^3.7.7",
     "octokit": "^4.0.3",

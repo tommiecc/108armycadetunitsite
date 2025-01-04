@@ -3,37 +3,12 @@ import { ref, onMounted, computed } from 'vue'
 import GalleryService from '@/services/GalleryService'
 import LoadingComponent from '@/components/LoadingComponent.vue'
 
-let galleryImages = ref([])
-let images = ref([])
+let images = ref([]);
 let selectedImage = ref(null);
 let isLoading = ref(true);
 
 const loadImages = () => {
-  try {
-    const imageModules = import.meta.glob(['../assets/img/*.*'], {
-        eager: true
-    });
-
-    // Map imageModules to an array of image objects
-    const loadedImages = Object.entries(imageModules).map(([path, module]) => {
-        const name = path.split('/').pop();
-        return {
-            path,
-            url: module.default,
-            name: name
-        };
-    });
-
-    // Filter only images that exist in galleryImages
-    const filteredImages = loadedImages.filter(image =>
-        galleryImages.value.some(galleryImage => galleryImage.name === image.name)
-    );
-
-    // Update images with the filtered list
-    images.value = filteredImages;
-  } catch (error) {
-    console.error(error.message);
-  }
+  images.value = GalleryService.whitelist.value;
 };
 
 const openLightbox = (image) => {
@@ -46,15 +21,12 @@ const closeLightbox = () => {
     document.body.style.overflow = 'auto'
 }
 
-onMounted(() => {
-    GalleryService.loadList();
-    GalleryService.whitelist.value.forEach(item => {
-      galleryImages.value.push(item.name);
-    });;
-    loadImages();
-    setInterval(() => {
-      isLoading.value = false;
-    }, 3000); // three second buffer allows image requests to be resolved.
+onMounted(async () => {
+  await GalleryService.loadList();
+  loadImages();
+  setInterval(() => {
+    isLoading.value = false;
+  }, 3000); // three second buffer allows image requests to be resolved.
 })
 
 </script>

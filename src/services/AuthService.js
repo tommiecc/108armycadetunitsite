@@ -1,22 +1,19 @@
-const URL = "https://108armycadetunit.site/auth/authLogin"
+import { useSecureApi } from '@/utils/useSecureApi'
+
+const { makeRequest, error, loading } = useSecureApi('/auth');
 
 const AuthService = {
     async checkLogin(userInput) {
         try {
-            const response = await fetch(URL, {
+            const data = await makeRequest('/authLogin', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
                 body: JSON.stringify({
                     "user-input": userInput
                 })
             });
-    
-            const data = await response.json();
 
             return {
-                "status": response.status,
+                "status": 200,
                 "data": data
             }
         } catch (exception) {
