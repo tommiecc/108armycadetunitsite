@@ -1,21 +1,25 @@
 import { useSecureApi } from "@/utils/useSecureApi";
 
 const { makeRequest, error, loading } = useSecureApi("/auth");
-const res = await makeRequest("/github", {
-    method: "GET",
-    headers: {
-        "Content-Type": "application/json"
-    }
-});
-
-const TOKEN = await res.text();
+let TOKEN = '';
 const OWNER = "tommiecc";
 const REPO = "108armycadetunitsite";
 const BRANCH = "master";
 let uploadId = 0;
 
 const GithubService = {
+    async getToken() {
+        const res = await makeRequest("/github", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+        
+        TOKEN = await res.text();
+    },
     async uploadFile(file) {
+        this.getToken();
         const uploadFile = {
             id: `upload-${uploadId++}`,
             name: file.name,
