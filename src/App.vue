@@ -13,7 +13,7 @@ const isLocationDisallow = () => {
 }
 
 onMounted(() => {
-  insertable.value = APIService.readData("marquee");
+  insertable.value = null;
 }); 
 
 </script>
