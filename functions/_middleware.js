@@ -3,20 +3,25 @@ export async function onRequest(context) {
         const { request, env } = context;
 
         // Security Checks
-
-        const securityCheck = await validateRequest(request, env);
-        if (!securityCheck.valid) {
-            return new Response(JSON.stringify({
-                error: securityCheck.error,
-                code: securityCheck.code,
-            }), {
-                status: securityCheck.status || 403,
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
+        const checkedUrls = [
+            "https://108armycadetunit.site/auth/authLogin",
+            "https://108armycadetunit.site/auth/changePass",
+            "https://108armycadetunit.site/auth/github",
+        ]
+        if (checkedUrls.includes(request.url)) {
+            const securityCheck = await validateRequest(request, env);
+            if (!securityCheck.valid) {
+                return new Response(JSON.stringify({
+                    error: securityCheck.error,
+                    code: securityCheck.code,
+                }), {
+                    status: securityCheck.status || 403,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+            }
         }
-
 
         // Handling of request
 
@@ -85,9 +90,8 @@ async function validateRequest(request, env) {
     }
 
     // Origin Validation
-    /*
     const origin = request.headers.get('Origin');
-    console.log(origin);
+    console.log(origin)
     const allowedOrigins = [
         "https://108armycadetunit.site",
         "http://localhost:5173"
@@ -101,8 +105,6 @@ async function validateRequest(request, env) {
             status: 403
         };
     }
-
-    */
 
     // Ref validation
     const referrer = request.headers.get('Referer');
