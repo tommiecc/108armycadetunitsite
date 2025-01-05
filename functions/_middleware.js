@@ -25,8 +25,7 @@ export async function onRequest(context) {
 
         // Handling of request
 
-        const origin = request.headers.get('Origin');
-
+        const origin = request.headers.get('Origin')
         // Preflight request handling
         if (request.method === 'OPTIONS') {
             return new Response(null, {
@@ -43,12 +42,10 @@ export async function onRequest(context) {
 
         const response = await context.next();
 
+
         // Add CORS headers to actual response
         const corsHeaders = {
-            'Access-Control-Allow-Origin': [
-                'https://108armycadetunit.site',
-                'http://localhhost:5173'
-            ],
+            'Access-Control-Allow-Origin': origin,
             'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
             'Access-Control-Allow-Headers': '*',
             'Access-Control-Allow-Credentials': 'true',
