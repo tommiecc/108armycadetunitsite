@@ -1,6 +1,6 @@
 export async function onRequest(context) {
     try {
-        const { request } = context;
+        const { request, env } = context;
 
         // Security Checks
 
