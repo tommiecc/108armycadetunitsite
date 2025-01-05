@@ -31,7 +31,7 @@ export function useSecureApi(baseURL) {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Request failed');
+        throw new Error(errorData || 'Request failed');
       }
 
       return await response.json();

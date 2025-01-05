@@ -45,7 +45,10 @@ export async function onRequest(context) {
 
         // Add CORS headers to actual response
         const corsHeaders = {
-            'Access-Control-Allow-Origin': origin,
+            'Access-Control-Allow-Origin': [
+                'https://108armycadetunit.site',
+                'http://localhhost:5173'
+            ],
             'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
             'Access-Control-Allow-Headers': '*',
             'Access-Control-Allow-Credentials': 'true',
