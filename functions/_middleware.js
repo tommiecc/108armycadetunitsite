@@ -55,7 +55,7 @@ export async function onRequest(context) {
                 "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://static.cloudflareinsights.com",
                 "style-src 'self' 'unsafe-inline'",
                 "img-src 'self' data: https:",
-                "connect-src 'self' https://api.yoursite.com",
+                "connect-src 'self' https://108armycadetunit.site",
                 "frame-src 'none'",
                 "font-src 'self'"
                 ].join('; ')
