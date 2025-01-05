@@ -92,7 +92,6 @@ async function validateRequest(request, env) {
         "https://108armycadetunit.site",
         "http://localhost:5173"
     ];
-    */
 
     if (!origin || !allowedOrigins.includes(origin)) {
         return {
@@ -102,6 +101,8 @@ async function validateRequest(request, env) {
             status: 403
         };
     }
+
+    */
 
     // Ref validation
     const referrer = request.headers.get('Referer');
