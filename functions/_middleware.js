@@ -86,6 +86,7 @@ async function validateRequest(request, env) {
 
     // Origin Validation
     const origin = request.headers.get('Origin');
+    console.log(origin);
     const allowedOrigins = [
         "https://108armycadetunit.site",
         "http://localhost:5173"
