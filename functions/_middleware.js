@@ -48,7 +48,17 @@ export async function onRequest(context) {
             'Access-Control-Allow-Origin': origin,
             'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
             'Access-Control-Allow-Headers': '*',
-            'Access-Control-Allow-Credentials': 'true'
+            'Access-Control-Allow-Credentials': 'true',
+            'Content-Security-Policy':
+                [
+                "default-src 'self'",
+                "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://static.cloudflareinsights.com",
+                "style-src 'self' 'unsafe-inline'",
+                "img-src 'self' data: https:",
+                "connect-src 'self' https://api.yoursite.com",
+                "frame-src 'none'",
+                "font-src 'self'"
+                ].join('; ')
         };
 
         const newResponse = new Response(response.body, {
@@ -71,7 +81,7 @@ export async function onRequest(context) {
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
                 'Access-Control-Allow-Headers': '*',
-                'Access-Control-Allow-Credentials': 'true'
+                'Access-Control-Allow-Credentials': 'true',
             }
         });
     }
