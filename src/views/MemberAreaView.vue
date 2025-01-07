@@ -3,6 +3,7 @@ import { ref, onMounted, nextTick, useTemplateRef } from 'vue'
 import TurndownService from 'turndown'
 import showdown from 'showdown'
 import GalleryEditComponent from '@/components/GalleryEditComponent.vue'
+import AuthStoreService from '@/services/AuthStoreService'
 
 const isAdmin = ref(true);
 const activeTab = ref('tab1');
@@ -54,8 +55,13 @@ const grabAndFill = (filename) => {
   return;
 }
 
+const checkAdmin = () => {
+  if (!AuthStoreService.isAdmin()) isAdmin.value = false;
+}
+
 onMounted(() => {
   grabAndFill("marquee");
+  checkAdmin();
 })
 
 
@@ -63,6 +69,10 @@ onMounted(() => {
 </script>
 
 <template>
+  <button @click="AuthStoreService.logout()">Logout</button>
+  <div id="memberSpace" v-if="!isAdmin">
+
+  </div>
   <div id="adminSpace" v-if="isAdmin">
     <div class="py-2">
       <div class="w-full bg-[#1a3409]">

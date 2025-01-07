@@ -22,6 +22,11 @@ const AuthStoreService = {
         return authData?.isLoggedIn === true;
     },
 
+    isAdmin() {
+        const authData = VueCookies.get(AUTH_COOKIE_NAME);
+        return authData?.isAdmin === true;
+    },
+
     getAuthData() {
         return VueCookies.get(AUTH_COOKIE_NAME) || null;
     }
