@@ -113,12 +113,25 @@ async function validateRequest(request, env) {
     // rate limiter
     const cache = caches.default;
     const ip = request.headers.get("CF-Connecting-IP");
-    const rateLimitKey = `ratelimit:${ip}`;
+    const rateLimitKey = new URL(`https://108armycadetunit.site/ratelimit/${ip}`);
 
     const currCount = await cache.match(rateLimitKey);
-    if (currCount && parseInt(currCount.text()) > 100) {
-        return new Response('Rate limit exceeded', { statusText: 429 });
+    if (currCount && parseInt(await currCount.text()) > 100) {
+        return {
+            valid: false,
+            error: 'Rate limit exceeded',
+            code: 'RATE_LIMIT_EXCEEDED',
+            status: 429
+        };
     }
+
+    // If not rate limited, you might want to increment the counter
+    const newCount = (currCount ? parseInt(await currCount.text()) : 0) + 1;
+    await cache.put(rateLimitKey, new Response(newCount.toString()), {
+        expirationTtl: 86400
+    });
+
+    return { valid: true };
 
 
 }
