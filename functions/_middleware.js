@@ -2,6 +2,20 @@ export async function onRequest(context) {
     try {
         const { request, env } = context;
 
+        // Preflight request handling
+        if (request.method === 'OPTIONS') {
+            return new Response(null, {
+                status: 204,
+                headers: {
+                    'Access-Control-Allow-Origin': 'http://localhost:5173',
+                    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+                    'Access-Control-Allow-Headers': '*',
+                    'Access-Control-Max-Age': '86400',
+                    'Access-Control-Allow-Credentials': 'true'
+                }
+            });
+        }
+
         // Security Checks
         const checkedUrls = [
             "https://108armycadetunit.site/auth/authLogin",
@@ -23,20 +37,7 @@ export async function onRequest(context) {
             }
         }
 
-        // Handling of request
-        // Preflight request handling
-        if (request.method === 'OPTIONS') {
-            return new Response(null, {
-                status: 204,
-                headers: {
-                    'Access-Control-Allow-Origin': 'http://localhost:5173',
-                    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-                    'Access-Control-Allow-Headers': '*',
-                    'Access-Control-Max-Age': '86400',
-                    'Access-Control-Allow-Credentials': 'true'
-                }
-            });
-        }
+        // handle request
 
         const response = await context.next();
 
