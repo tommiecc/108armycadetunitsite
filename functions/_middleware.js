@@ -107,7 +107,7 @@ async function validateRequest(request, env) {
         "http://localhost:5173"
     ];
 
-    if (!origin || !allowedOrigins.includes(origin)) {
+    if (!origin) {
         return {
             valid: false,
             error: 'Invalid origin',
