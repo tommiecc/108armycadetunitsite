@@ -16,7 +16,7 @@ export async function onRequest(context) {
             });
         }
 
-        /* Security Checks
+        //Security Checks
         const checkedUrls = [
             "https://108armycadetunit.site/auth/authLogin",
             "https://108armycadetunit.site/auth/changePass",
@@ -36,7 +36,6 @@ export async function onRequest(context) {
                 });
             }
         }
-        */
 
         // handle request
 
