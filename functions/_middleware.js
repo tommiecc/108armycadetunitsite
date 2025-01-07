@@ -24,14 +24,12 @@ export async function onRequest(context) {
         }
 
         // Handling of request
-
-        const origin = request.headers.get('Origin')
         // Preflight request handling
         if (request.method === 'OPTIONS') {
             return new Response(null, {
                 status: 204,
                 headers: {
-                    'Access-Control-Allow-Origin': origin,
+                    'Access-Control-Allow-Origin': 'http://localhost:5173',
                     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
                     'Access-Control-Allow-Headers': '*',
                     'Access-Control-Max-Age': '86400',
@@ -45,7 +43,7 @@ export async function onRequest(context) {
 
         // Add CORS headers to actual response
         const corsHeaders = {
-            'Access-Control-Allow-Origin': origin,
+            'Access-Control-Allow-Origin': 'http://localhost:5173',
             'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
             'Access-Control-Allow-Headers': '*',
             'Access-Control-Allow-Credentials': 'true',
@@ -96,34 +94,6 @@ async function validateRequest(request, env) {
             error: 'Method not allowed',
             code: 'METHOD_NOT_ALLOWED',
             status: 405
-        };
-    }
-
-    // Origin Validation
-    const origin = request.headers.get('Origin');
-    console.log(origin)
-    const allowedOrigins = [
-        "https://108armycadetunit.site",
-        "http://localhost:5173"
-    ];
-
-    if (!origin) {
-        return {
-            valid: false,
-            error: 'Invalid origin',
-            code: 'INVAILD_ORIGIN',
-            status: 403
-        };
-    }
-
-    // Ref validation
-    const referrer = request.headers.get('Referer');
-    if (!referrer || !allowedOrigins.some(origin => referrer.startsWith(origin))) {
-        return {
-            valid: false,
-            error: 'Invalid referrer',
-            code: 'INVALID_REFERRER',
-            status: 403
         };
     }
 
