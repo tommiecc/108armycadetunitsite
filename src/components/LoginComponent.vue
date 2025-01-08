@@ -36,9 +36,21 @@
       <button 
         type="submit"
         id="submitButton" 
-        @click="authLogin"
+        @click="authLogin()"
         class="w-full py-3 px-4 bg-[#2d4f0c] hover:bg-[#4a7012] text-white font-bold rounded transition-colors duration-200"
-      >Log In</button>
+        v-if="!isLoading"
+      >
+        Login
+      </button>
+      <button 
+        type="submit"
+        class="w-full py-3 px-4 bg-[#2d4f0c] hover:bg-[#4a7012] text-white font-bold rounded transition-colors duration-200"
+        v-if="isLoading"
+      >
+        <i class="fa fa-spinner fa-pulse"></i>
+        Loading
+      </button>
+      
 
       <!-- Footer Links -->
       <div class="text-center text-sm space-y-2">
@@ -53,20 +65,35 @@
 
 </template>
 
+<style scoped>
+.fa {
+  margin-left: -12px;
+  margin-right: 8px;
+}
+
+</style>
+
 <script>
 export default {
   components: { AlertComponent },
+  data() {
+    return {
+      isLoading: false
+    }
+  },
   methods: {
     showAlert(message) {
       this.$refs.alert.show(message);
     },
     async authLogin() {
+      this.isLoading = true
       let userInput = document.getElementById("password").value;
 
       const response = await AuthService.checkLogin(userInput);
       
       if (response.status === 200) {
         AuthStoreService.login(response.data.isAdmin);
+        this.isLoading = false;
         this.$router.push('/membersOnly');
       } else {
         try {
@@ -74,6 +101,7 @@ export default {
         } catch (exception) {
           this.showAlert(`500 - Internal Server Error`);
         }
+        this.isLoading = false;
       }
     }
   }
