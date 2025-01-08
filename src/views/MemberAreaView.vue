@@ -6,9 +6,11 @@ import GalleryEditComponent from '@/components/GalleryEditComponent.vue'
 import AuthStoreService from '@/services/AuthStoreService'
 import PromotionComponent from '@/components/PromotionComponent.vue'
 import DownloadsEditComponent from '@/components/DownloadsEditComponent.vue'
+import DownloadsComponent from '@/components/DownloadsComponent.vue'
+import PromotionsService from '@/services/PromotionsService.js'
 
 const isAdmin = ref(true);
-const promotionsActive = ref(true);
+const promotionsActive = ref(null);
 const activeTab = ref('tab1');
 const sidebar = ref(null);
 
@@ -56,6 +58,16 @@ const updateMarquee = () => {
   }
 }
 
+const togglePromotions = () => {
+  PromotionsService.toggle(!promotionsActive);
+  loadPromotions();
+}
+
+const loadPromotions = () => {
+  promotionsActive.value = PromotionsService.load();
+  if (promotionsActive.value === null) console.error("Error");
+}
+
 const grabAndFill = (filename) => {
   return;
 }
@@ -72,6 +84,7 @@ const logout = () => {
 onMounted(() => {
   grabAndFill("marquee");
   checkAdmin();
+  loadPromotions();
 })
 
 
@@ -144,9 +157,7 @@ onMounted(() => {
 
         <section class="bg-white shadow-md rounded-lg p-6 w-full" id="download-resources">
           <h2 class="text-2xl font-semibold mb-4 text-gray-800">Download Resources</h2>
-          <div class="w-full">
-            
-          </div>
+          <DownloadsComponent />
         </section>
       </main>
     </div>
@@ -242,6 +253,19 @@ onMounted(() => {
               </div>
               <div v-if="activeTab === 'tab3'">
                 <h4 class="text-black text-xl font-semibold text-balance py-2">Edit Members Area</h4>
+                <div class="container mx-auto px-4 py-8">
+                  <div class="mb-8 bg-white rounded-lg shadow-md p-6 flex flex-wrap flex-col">
+                    <h2 class="text-2xl font-semibold mb-4 flex-none">Open/Close promotions</h2>
+                    <button
+                      @click="togglePromotions()"
+                      class="p-2 rounded-lg shadow-md text-white hover:scale-105"
+                      :class="{ 'bg-[#1a3409]': !promotionsActive, 'bg-red-800': promotionsActive }"
+                    >
+                      <span v-if="promotionsActive">Close Promotions</span>
+                      <span v-if="!promotionsActive">Open Promotions</span>
+                    </button>
+                  </div>
+                </div>
                 <DownloadsEditComponent />
               </div>
               <div v-if="activeTab === 'tab4'">

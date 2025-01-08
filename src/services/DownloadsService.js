@@ -20,6 +20,7 @@ const GalleryService = {
             whitelist.value = final;
         } catch (error) {
             console.error(error);
+            whitelist.value = [];
         }
     },
     async saveList() {

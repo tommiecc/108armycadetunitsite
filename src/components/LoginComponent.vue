@@ -96,11 +96,8 @@ export default {
         this.isLoading = false;
         this.$router.push('/membersOnly');
       } else {
-        try {
-          this.showAlert(`${response.status} - ${response.data.message}`);
-        } catch (exception) {
-          this.showAlert(`500 - Internal Server Error`);
-        }
+        const data = await response.text();
+        this.showAlert(`${response.status} - ${data}`);
         this.isLoading = false;
       }
     }

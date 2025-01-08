@@ -23,7 +23,7 @@
       message: {
         type: String,
         required: true,
-        default: "500 - Internal Server Error"
+        default: "Please try again later."
       }
     },
     data() {
