@@ -56,7 +56,7 @@ onBeforeUnmount(() => {
           <!-- Navigation -->
           <nav class="bg-[#1a3409] p-3 text-center relative flex justify-between items-center">
             <!-- Hamburger Menu for smaller screens -->
-            <button class="icon" @click="toggleMenu()" :class="{ 'hidden': isDesktop }">
+            <button class="icon" @click="toggleMenu()" :class="{ 'invisible': isDesktop }">
               <i class="fa fa-bars text-white fa-2x"></i>
             </button>
             

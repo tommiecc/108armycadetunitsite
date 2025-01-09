@@ -30,14 +30,13 @@ export function useSecureApi(baseURL) {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData || 'Request failed');
+        return response.json() || "Fetch failed."
       }
 
       return await response.json();
     } catch (err) {
       error.value = err.message;
-      throw err;
+      return err;
     } finally {
       loading.value = false;
     }

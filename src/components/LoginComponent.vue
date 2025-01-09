@@ -90,14 +90,13 @@ export default {
       let userInput = document.getElementById("password").value;
 
       const response = await AuthService.checkLogin(userInput);
-      
-      if (response.status === 200) {
+      console.log(response)
+      if (response.status === 200 && response.data.message === "Login Successful") {
         AuthStoreService.login(response.data.isAdmin);
         this.isLoading = false;
         this.$router.push('/membersOnly');
       } else {
-        const data = await response.text();
-        this.showAlert(`${response.status} - ${data}`);
+        this.showAlert(`Please try again later (${response.data.message})`);
         this.isLoading = false;
       }
     }

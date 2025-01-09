@@ -106,7 +106,13 @@
             <input type="password" id="passwordInput" class="grow max-w-32"/>
           </label>
           <div class="card-actions justify-end">
-            <button class="text-white bg-[#1a3409] p-4 rounded-lg hover:bg-[#c4a000] hover:border-[#c4a000] hover:scale-105 transition-all" @click="authChallenge()">Log In</button>
+            <button class="text-white bg-[#1a3409] p-4 rounded-lg hover:bg-[#c4a000] hover:border-[#c4a000] hover:scale-105 transition-all" @click="authChallenge()">
+              <span v-if="!isLoading">Log In</span>
+              <span v-else>
+                <i class="fa fa-spinner fa-pulse"></i>
+                Loading
+              </span>
+            </button>
           </div>
         </div>
       </div>
@@ -124,7 +130,7 @@
             If you're not going to be able to attend a parade night, please log your absence using the button below (requires login to members area).
           </p>
           <div class="card-actions justify-end">
-            <a href="/membersOnly#log-absence" class="text-white bg-[#1a3409] p-4 rounded-lg hover:bg-[#c4a000] hover:border-[#c4a000] hover:scale-105 transition-all">Log an absence</a>
+            <a href="/membersOnly#log-absences" class="text-white bg-[#1a3409] p-4 rounded-lg hover:bg-[#c4a000] hover:border-[#c4a000] hover:scale-105 transition-all">Log an absence</a>
           </div>
         </div>
       </div>
@@ -142,7 +148,7 @@
             Access links to download important documents... (requires login to members area)
           </p>
           <div class="card-actions justify-end">
-            <a href="/membersOnly#download-resources" target="_blank" class="text-white bg-[#1a3409] p-4 rounded-lg hover:bg-[#c4a000] hover:border-[#c4a000] hover:scale-105 transition-all">Go</a>
+            <a href="/membersOnly#download-resources" class="text-white bg-[#1a3409] p-4 rounded-lg hover:bg-[#c4a000] hover:border-[#c4a000] hover:scale-105 transition-all">Go</a>
           </div>
         </div>
       </div>
@@ -188,6 +194,7 @@
       isLoading.value = false;
       router.push('/membersOnly');
     } else {
+      isLoading.value = false;
       console.error(res);
       document.getElementById("alert_modal").showModal();
     }
