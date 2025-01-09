@@ -96,7 +96,7 @@ export default {
         this.isLoading = false;
         this.$router.push('/membersOnly');
       } else {
-        this.showAlert(`Please try again later (${response.data.message})`);
+        this.showAlert(`${response.data.message || 'Please try again later'}`);
         this.isLoading = false;
       }
     }

@@ -32,10 +32,12 @@ export async function onRequest(context) {
 
         // Only compare against admin hash if it matches the regular password hash
         // This reduces bcrypt operations in most cases
-        const isCorrectPass = await bcrypt.compare(userInput, passHash);
-        
-        if (isCorrectPass) {
-            const isAdmin = await bcrypt.compare(userInput, adminHash);
+        const [isCorrectPass, isAdmin] = await Promise.all([
+            await bcrypt.compare(userInput, passHash),
+            await bcrypt.compare(userInput, adminHash)
+        ]);
+
+        if (isCorrectPass || isAdmin) {
             return responseHandler(200, "Login Successful", isAdmin);
         }
 
