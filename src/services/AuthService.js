@@ -13,7 +13,7 @@ const AuthService = {
             });
 
             return {
-                "status": 200,
+                "status": data.status,
                 "data": data
             }
         } catch (exception) {

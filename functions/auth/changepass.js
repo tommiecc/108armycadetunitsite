@@ -6,7 +6,7 @@ PAYLOAD:
 {
     is-admin: <true/false>,
     is-logged-in: <true/false>,
-    user-input: <true/false>
+    user-input: <string>
 }
 
 */

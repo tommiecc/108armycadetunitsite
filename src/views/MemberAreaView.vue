@@ -8,6 +8,7 @@ import PromotionComponent from '@/components/PromotionComponent.vue'
 import DownloadsEditComponent from '@/components/DownloadsEditComponent.vue'
 import DownloadsComponent from '@/components/DownloadsComponent.vue'
 import PromotionsService from '@/services/PromotionsService.js'
+import PasswordChangeComponent from '@/components/PasswordChangeComponent.vue'
 
 const isAdmin = ref(null);
 const promotionsActive = ref(null);
@@ -281,7 +282,10 @@ onMounted(() => {
                   <button class="bg-[#1a3409] text-white w-full text-left px-4 py-2 rounded-md transition-colors duration-150 hover:bg-[#c4a000]" @click="updateMarquee()">Save Changes</button>
                 </div>
               </div>
-              <div v-if="activeTab === 'tab5'">Password</div>
+              <div v-if="activeTab === 'tab5'">
+                <h4 class="text-black text-xl font-semibold text-balance py-2">Change Password</h4>
+                <PasswordChangeComponent />
+              </div>
           </div>
       </main>
     </div>
