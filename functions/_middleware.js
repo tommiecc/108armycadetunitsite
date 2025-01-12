@@ -9,16 +9,15 @@ export async function onRequest(context) {
 
     // Define security headers separately
     const securityHeaders = {
-        'Content-Security-Policy':
-            [
-                "default-src 'self'",
-                "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://static.cloudflareinsights.com",
-                "style-src 'self' 'unsafe-inline'",
-                "img-src 'self' data: https:",
-                "connect-src 'self' https://108armycadetunit.site",
-                "frame-src https://docs.google.com/forms/d/e/1FAIpQLScTes3h7b3SNXSDwIIqUtfqrmoTufQpEH7JBh-e-U-C3B62Mg/viewform?embedded=true",
-                "font-src 'self'"
-            ].join('; ')
+        'Content-Security-Policy': [
+            "default-src 'self'",
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://static.cloudflareinsights.com",
+            "style-src 'self' 'unsafe-inline'",
+            "img-src 'self' data: https:",
+            "connect-src 'self' https://108armycadetunit.site",
+            "frame-src https://docs.google.com/",
+            "font-src 'self'"
+        ].join('; ')
     };
 
     try {
