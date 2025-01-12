@@ -91,7 +91,7 @@ export default {
 
       const response = await AuthService.checkLogin(userInput);
       console.log(response)
-      if (response.status === 200 && response.data.message === "Login Successful") {
+      if (response.status === 200 || response.data.message === "Login Successful") {
         AuthStoreService.login(response.data.isAdmin);
         this.isLoading = false;
         this.$router.push('/membersOnly');
